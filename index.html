@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System Diagnostic - Birthday Edition</title>
+    <style>
+        /* MAIN TERMINAL CSS */
+        body {
+            background-color: #0d1117;
+            color: #58a6ff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevents scroll during loading */
+        }
+        #terminal {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+        .line { margin: 8px 0; }
+        .cursor {
+            border-right: 2px solid #58a6ff;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
+        .success { color: #3fb950; }
+        .variable { color: #d2a8ff; }
+        .heart { color: #f85149; } /* Red for the heart */
+        hr { border: 0.5px solid #30363d; margin: 15px 0; }
+
+        /* THE BUTTON CSS */
+        #logButton {
+            background-color: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+            display: block; /* Centers the button */
+            width: 100%;
+        }
+        #logButton:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+        }
+
+        /* THE LETTER MODAL (HIDDEN BY DEFAULT) */
+        #letterModal {
+            display: none; /* Hidden */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8); /* Fades background */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #letterModal.show {
+            display: flex;
+            opacity: 1;
+        }
+        #letterContent {
+            background-color: #ffffff; /* Classic letter white */
+            color: #1f2328; /* Dark, readable text */
+            font-family: 'Georgia', serif; /* A "letter" font, not a code font */
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 85%;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.7);
+            position: relative;
+            line-height: 1.6;
+        }
+        #closeModal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #8b949e;
+            cursor: pointer;
+            font-family: sans-serif;
+        }
+        .ofw-tag {
+            font-size: 0.8em;
+            color: #57606a;
+            font-family: 'Courier New', sans-serif;
+            margin-bottom: 20px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="terminal">
+    <div class="line">> system.init();</div>
+    <div class="line">> locating_mom_status... <span class="success">[OFW_ACTIVE]</span></div>
+    <div class="line">> scanning_heart_drive... <span class="success">[FOUND]</span></div>
+    <hr>
+    <div class="line"><b>Status:</b> Critical Upgrade Imminent (Birthday Level Up)</div>
+    <div class="line"><b>Core Module:</b> <span class="variable">Sacrifice_Level_9000</span> = true;</div>
+    <div class="line"><b>Core Module:</b> <span class="variable">Global_Love_Transmission</span> = online;</div>
+    <hr>
+    <div class="line success" style="font-size: 1.1em; text-align: center;">
+        Happy Birthday, Ma! We love you from Cauayan City! <span class="heart">♥</span>
+    </div>
+    <div class="line" style="text-align: center;">
+        <span class="cursor">&nbsp;</span>
+    </div class="line">
+    
+    <button id="logButton" onclick="openLetter()">> Accessing Personal Log (Son/Daughter)...</button>
+</div>
+
+<div id="letterModal">
+    <div id="letterContent">
+        <span id="closeModal" onclick="closeLetter()">&times;</span>
+        <span class="ofw-tag">// Transmission Log: From Isabela to the World.</span>
+        
+        <p>Dearest Ma,</p>
+
+        <p>
+            Happy, Happy Birthday! I know it’s hard being so far away, especially 
+            on your special day, but I want you to know how much your sacrifice 
+            means to all of us. You working hard there as an OFW is the greatest 
+            act of love, and we never take it for granted.
+        </p>
+        <p>
+            I’m working hard in my BSIT course here at ISU so I can make you proud and, 
+            one day, bring you home for good. Your strength is what motivates me 
+            every day. Stay safe, healthy, and happy. We love you more than words, 
+            codes, or logic can describe.
+        </p>
+        <p>With love,</p>
+        <p><b>[Your Name]</b></p>
+        <p class="heart" style="text-align: center; font-size: 1.5em; margin: 0;">♥♥♥</p>
+    </div>
+</div>
+
+<script>
+    // 1. MODAL LOGIC (Shows the letter)
+    function openLetter() {
+        var modal = document.getElementById('letterModal');
+        modal.classList.add('show');
+    }
+
+    function closeLetter() {
+        var modal = document.getElementById('letterModal');
+        modal.classList.remove('show');
+    }
+
+    // 2. Add some fake "loading" time for the terminal to make it look real
+    // (This hides the button for 2.5 seconds when the page first opens)
+    document.addEventListener("DOMContentLoaded", function() {
+        var btn = document.getElementById('logButton');
+        btn.style.opacity = '0';
+        btn.style.cursor = 'default';
+        
+        setTimeout(function() {
+            btn.style.transition = 'opacity 1s ease';
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+        }, 2500); // 2.5 seconds delay
+    });
+</script>
+
+</body>
+</html>
